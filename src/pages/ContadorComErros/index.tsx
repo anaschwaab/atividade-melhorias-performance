@@ -1,6 +1,7 @@
 import faker from "@faker-js/faker";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Button } from "../../components/Button";
+import { v4 as uuidv4 } from 'uuid';
 
 const Error: React.FC = ({ children }) => {
   console.log('===== renderiza erro', children);
@@ -50,6 +51,12 @@ export const ContadorComErros = () => {
     setContador(contador - 1);
   }
 
+  const renderedErros = useMemo(() => {
+    return erros.map((erro) => (
+      <Error key={uuidv4()}>{erro.erro}</Error>
+    ));
+  }, [erros])
+
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -67,11 +74,12 @@ export const ContadorComErros = () => {
       </div>
 
       <div className="mt-10">
-        {
+        {/* {
           erros.map(error => (
             <Error key={error.id}>{ error.erro }</Error>
           ))
-        }
+        } */}
+        {renderedErros}
       </div>
     </div>
   );
