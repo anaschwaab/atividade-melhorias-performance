@@ -2,12 +2,16 @@ import faker from "@faker-js/faker";
 import { useState } from "react";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
+import { v4 as uuidv4 } from 'uuid';
+
 
 const iniciaInputs = (quantidade: number = 1) =>
   Array.from(Array(quantidade).keys()).map(() => faker.name.firstName());
 
+
 export const ListKeys = () => {
   const [inputs, setInputs] = useState<string[]>(iniciaInputs());
+
 
   const addInput = () => {
     setInputs([faker.name.firstName(), ...inputs])
@@ -21,6 +25,7 @@ export const ListKeys = () => {
           {
             inputs.map((input) => (
               <Input
+                key={uuidv4()}
                 label={ input }
                 name={ input }
               />

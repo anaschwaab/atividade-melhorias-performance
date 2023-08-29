@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { classNames } from "../../helpers/classNames";
 
+
 const colors: string[] = [
   'bg-gray-600',
   'bg-red-600',
@@ -28,23 +29,32 @@ const breakpoints: number[] = [
   1500,
 ];
 
+
 export const ColorResponsive = () => {
   const [color, setColor] = useState('');
+
 
   useEffect(() => {
     const alteraCor = () => {
       const width = window.innerWidth;
       const index = breakpoints.findIndex(breakpoint => width < breakpoint);
       const breakpointIndex = index === -1 ? 0 : index;
-      setColor(colors[breakpointIndex]);
+      const newColor = colors[breakpointIndex];
+
+
+      if (newColor !== color) {
+        setColor(colors[breakpointIndex]);
+      }
     }
+
 
     alteraCor();
     window.addEventListener('resize', alteraCor);
     return () => {
       window.removeEventListener('resize', alteraCor);
     }
-  }, []);
+  }, [color]);
+
 
   console.log('==== re-render')
   return (
